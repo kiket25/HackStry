@@ -5,61 +5,62 @@
 */
 
 body {
-    font-size: 18px;
-    font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 1024px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 15px;
-    margin-bottom: 40px;
-}    
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 15px;
+  margin-bottom: 40px;
+}
 
 header nav {
-    width: 80%;
+  width: 80%;
 }
 
- header ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    justify-content: space-around;
- }
+header ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+}
 
- header img {
-    width: 140px;
- }
- 
- header a {
-    color: #101828;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
- }
+header img {
+  width: 140px;
+}
 
- header a:hover {
-    text-decoration: underline;
- }
+header a {
+  color: #101828;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+header a:hover {
+  text-decoration: underline;
+}
 
 h1 {
-    text-align: center;
-    margin-bottom: 40px;
-    font-size: 24px;
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 24px;
+  color: #101828;
 }
 
- main {
-    width: 1024px;
-    margin-left: auto;
-    margin-right: auto;
- }
+main {
+  width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
- .post {
+.post {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
@@ -77,13 +78,13 @@ h1 {
 .post h2 {
   font-size: 18px;
   margin-right: 10px;
-  color: #333;
+  color: #101828;
 }
 
 /* Estilizar la categoría */
 .post h3 {
   font-size: 14px;
-  color: #e63946; /* Cambiar el color */
+  color: #e47172; /* Cambiar el color */
   font-weight: normal;
   margin-right: 10px;
 }
@@ -91,7 +92,6 @@ h1 {
 /* Estilizar la descripción */
 .post p {
   font-size: 12px;
-  margin-right: 19px;
   color: #666;
   margin: 5px 0 0 0;
 }
@@ -121,6 +121,18 @@ h1 {
   cursor: pointer;
 }
 
+/* Estilo para el visor PDF/Markdown */
+.viewer {
+  display: block;
+  margin: 20px auto;
+  width: 100%;
+  height: 600px;
+  border: 1px solid #101828;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 /* Ajustar la visualización en dispositivos móviles */
 @media (max-width: 768px) {
   .post {
@@ -142,37 +154,30 @@ h1 {
 }
 
 h3 {
-    color: #e47172;
-    font-size: 14px;
-    font-weight: normal;
-    margin-bottom: 0;
+  color: #e47172;
+  font-size: 14px;
+  font-weight: normal;
+  margin-bottom: 0;
 }
 
 h2 {
-    font-size: 18px;
-    line-height: 24px;
-    margin-top: 5px;
+  font-size: 18px;
+  line-height: 24px;
+  margin-top: 5px;
+  color: #101828;
 }
 
 h4 {
-    color: #e47172;
-    font-size: 18px;
-    font-weight: normal;
-}
-
-.viewer {
-  display: block;
-  margin: 0 auto;
-  color: #fff;
-  background-color: #fff;
-  border: 1px solid #101828;
+  color: #e47172;
+  font-size: 18px;
+  font-weight: normal;
 }
 
 footer {
-    background-color: #E5E5E5;
-    text-align: center;
-    color: #475467;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    font-size: 14 px;
+  background-color: #E5E5E5;
+  text-align: center;
+  color: #475467;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  font-size: 14px;
 }

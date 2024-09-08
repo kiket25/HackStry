@@ -3,6 +3,7 @@
         "image": "img/img-picadilly.png",
         "title": "Máquina Piccadilly",
         "category": "Write up",
+        "fileType": "pdf",
         "description": "Write up de la máquina Piccadilly - DockerLabs (PDF)",
          "content": "posts/picadilly.pdf"
     },
@@ -10,6 +11,7 @@
         "image": "img/img-paradise.png",
         "title": "Máquina Paradise",
         "category": "Write up",
+        "fileType": "pdf",
         "description": "Write up de la máquina Paradise - DockerLabs (PDF)",
          "content": "posts/paradise.pdf"
     },
@@ -17,6 +19,7 @@
         "image": "img/wifip.jpg",
         "title": "Cómo Proteger tu Red Wi-Fi de Amenazas",
         "category": "consejo",
+        "fileType": "md",
         "description": "En este post test explico de forma rapida como proteger tu red wifi.",
         "content": "posts/protegetured.md"
     }

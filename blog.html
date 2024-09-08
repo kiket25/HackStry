@@ -69,6 +69,19 @@
         const postDetail = document.getElementById('post-detail');
         const postContent = document.getElementById('post-content');
         
+        if (post.fileType === 'md') {
+          fetch(post.content)
+            .then(response => response.text())
+            .then(markdown => {
+              const htmlContent = marked.parse(markdown);
+              postContent.innerHTML = `
+                  <h2>${post.title}</h2>
+                  <p><strong>Categoría:</strong> ${post.category}</p>
+                  <div>${htmlContent}</div>
+              `;
+              postDetail.style.display = 'block';
+            });
+        } else {
         // Usamos <embed> para mostrar el PDF en la página
         postContent.innerHTML = `
             <h2>${post.title}</h2>
@@ -77,6 +90,7 @@
         `;
         
         postDetail.style.display = 'block';
+        }
     }
 
     // Función para cerrar la vista del post detallado
@@ -89,6 +103,7 @@
 
     document.querySelector('.close').onclick = closePostDetail;
 </script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 </body>
 </html>

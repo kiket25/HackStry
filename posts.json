@@ -5,7 +5,8 @@
         "category": "Write Up",
         "fileType": "pdf",
         "description": "Write up de la máquina Piccadilly - DockerLabs (PDF)",
-         "content": "posts/picadilly.pdf"
+        "content": "posts/picadilly.pdf",
+        "date": "2024-09-13"
     },
     {
         "image": "img/img-paradise.png",
@@ -13,7 +14,8 @@
         "category": "Write Up",
         "fileType": "pdf",
         "description": "Write up de la máquina Paradise - DockerLabs (PDF)",
-         "content": "posts/paradise.pdf"
+        "content": "posts/paradise.pdf",
+        "date": "2024-09-13"
     },
     {
         "image": "img/wifip.jpg",
@@ -21,7 +23,8 @@
         "category": "consejo",
         "fileType": "md",
         "description": "En este post test explico de forma rapida como proteger tu red wifi.",
-        "content": "posts/protegetured.md"
+        "content": "posts/protegetured.md",
+        "date": "2024-09-14"
     },
     {
         "image": "img/img-devil.png",
@@ -29,6 +32,7 @@
         "category": "Write Up",
         "fileType": "pdf",
         "description": "Write Up de la máquina Devil - DockerLabs (PDF)",
-        "content": "posts/devil.pdf"
+        "content": "posts/devil.pdf",
+        "date": "2024-09-20"
     }
 ]

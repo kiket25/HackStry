@@ -86,7 +86,7 @@
         postContent.innerHTML = `
             <h2>${post.title}</h2>
             <p><strong>Categoría:</strong> ${post.category}</p>
-            <iframe class="viewer" src="${post.content}" width="800px" height="600px" /></iframe>
+            <iframe class="viewer" src="${post.content}#toolbar=0" width="800px" height="600px" /></iframe>
         `;
         
         postDetail.style.display = 'block';
@@ -104,6 +104,8 @@
     document.querySelector('.close').onclick = closePostDetail;
 </script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+
 
 </body>
 </html>

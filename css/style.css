@@ -68,7 +68,7 @@ h1 {
 
 .post-thumbnail {
   flex-shrink: 0;
-  width: 150px;
+  width: 120px; /* Reducción de tamaño de imagen */
   margin-right: 20px;
 }
 
@@ -89,7 +89,8 @@ h1 {
 }
 
 .category {
-  color: #e74c3c;
+  font-size: 0.9rem; /* Fuente más pequeña */
+  color: #e74c3c; /* Color rojo */
 }
 
 footer {

@@ -3,83 +3,133 @@
 
 <head>
   <meta charset="utf-8">
-  <title>HackStry - Blog</title>
+  <title>Hackstry</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="stylesheet" href="css/style_blog.css"> <!-- Vinculado al archivo CSS para organizar mejor los posts -->
-
-  <meta name="theme-color" content="#fafafa">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="css/style_blog.css">
 </head>
 
 <body>
 
 <header>
-    <img src="img/logo.png" alt="Logotipo HackStry" width="200">
+    <img src="img/logo.png" alt="Logotipo hackstry" width="200">
   
   <nav>
     <ul>
       <li><a href="index.html">Home</a></li>
-      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="blog.html">Blog</a></li>
       <li><a href="about.html">About Me</a></li>
     </ul>
   </nav>
+
 </header>
 
-<main>
+<main id="blog-posts">
   <h1>Blog sobre Ciberseguridad y Sistemas</h1>
+  <div id="posts-container"></div>
 
-  <section class="posts-list">
-    <article class="post-item">
-      <div class="post-thumbnail">
-        <img src="img/img-picadilly.png" alt="Maquina Picadilly">
-      </div>
-      <div class="post-content">
-        <h2>Máquina Picadilly</h2>
-        <p><strong>Categoría:</strong> <span class="category">Write Up</span></p>
-        <p>Write up de la máquina Piccadilly - DockerLabs (PDF)</p>
-      </div>
-    </article>
-
-    <article class="post-item">
-      <div class="post-thumbnail">
-        <img src="img/img-paradise.png" alt="Maquina Paradise">
-      </div>
-      <div class="post-content">
-        <h2>Máquina Paradise</h2>
-        <p><strong>Categoría:</strong> <span class="category">Write Up</span></p>
-        <p>Write up de la máquina Paradise - DockerLabs (PDF)</p>
-      </div>
-    </article>
-
-    <article class="post-item">
-      <div class="post-thumbnail">
-        <img src="img/wifip.jpg" alt="Protege tu Red Wi-Fi">
-      </div>
-      <div class="post-content">
-        <h2>Cómo Proteger tu Red Wi-Fi de Amenazas</h2>
-        <p><strong>Categoría:</strong> <span class="category">Consejo</span></p>
-        <p>En este post explico de forma rápida cómo proteger tu red Wi-Fi.</p>
-      </div>
-    </article>
-
-    <article class="post-item">
-      <div class="post-thumbnail">
-        <img src="img/img-devil.png" alt="Maquina Devil">
-      </div>
-      <div class="post-content">
-        <h2>Máquina Devil</h2>
-        <p><strong>Categoría:</strong> <span class="category">Write Up</span></p>
-        <p>Write up de la máquina Devil - DockerLabs (PDF)</p>
-      </div>
-    </article>
-  </section>
-
+  <!-- Vista detallada del post -->
+  <div id="post-detail" class="post-detail">
+      <span class="close">&times;</span>
+      <div id="post-content"></div>
+  </div>
 </main>
 
 <footer>
   <p>® 2024 HackStry. Todos los derechos reservados</p>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+
+<script>
+    // Función para cargar los posts desde el archivo JSON
+    function fetchPosts() {
+        fetch('posts.json')  // Asegúrate de tener el archivo posts.json en la misma carpeta
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('posts-container');
+            container.innerHTML = '';  // Limpiar contenedor
+
+            data.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <img src="${post.image}" alt="${post.title}">
+                    <h2>${post.title}</h2>
+                    <h3><strong>Categoría:</strong> ${post.category}</h3>
+                    <p>${post.description}</p>
+                `;
+                postElement.onclick = () => showPostDetail(post);
+                container.appendChild(postElement);
+            });
+        });
+    }
+
+    // Mostrar el detalle del post
+    function showPostDetail(post) {
+        const postDetail = document.getElementById('post-detail');
+        const postContent = document.getElementById('post-content');
+        
+        postDetail.style.display = 'block';
+
+        if (post.fileType === 'md') {
+            // Mostrar contenido Markdown
+            fetch(post.content)
+              .then(response => response.text())
+              .then(markdown => {
+                const htmlContent = marked.parse(markdown);
+                postContent.innerHTML = `
+                    <h2>${post.title}</h2>
+                    <p><strong>Categoría:</strong> ${post.category}</p>
+                    <div>${htmlContent}</div>
+                `;
+            });
+        } else if (post.fileType === 'pdf') {
+            // Renderizar PDF usando PDF.js
+            postContent.innerHTML = `
+                <h2>${post.title}</h2>
+                <p><strong>Categoría:</strong> ${post.category}</p>
+                <canvas id="pdf-render"></canvas>
+            `;
+            
+            // Cargar PDF usando PDF.js
+            const url = post.content;  // La URL del PDF
+            const pdfjsLib = window['pdfjs-dist/build/pdf'];
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
+            
+            pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+                let pdfDoc = pdfDoc_;
+                let pageNum = 1;
+
+                pdfDoc.getPage(pageNum).then(function(page) {
+                    let viewport = page.getViewport({ scale: 1.5 });
+                    let canvas = document.getElementById('pdf-render');
+                    let context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    let renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    page.render(renderContext);
+                });
+            });
+        }
+    }
+
+    // Función para cerrar la vista del post detallado
+    function closePostDetail() {
+        document.getElementById('post-detail').style.display = 'none';
+    }
+
+    // Llamar a la función para cargar los posts cuando la página se cargue
+    window.onload = fetchPosts;
+
+    document.querySelector('.close').onclick = closePostDetail;
+</script>
 
 </body>
 </html>

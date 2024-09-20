@@ -1,14 +1,14 @@
 <!doctype html>
-<html class="no-js" lang="es">
+<html class="no-js" lang="ES">
 
 <head>
   <meta charset="utf-8">
   <title>HackStry</title>
-  <meta name="description" content="Blog sobre Ciberseguridad y Sistemas">
+  <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta property="og:title" content="HackStry">
-  <meta property="og:type" content="website">
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
   <meta property="og:url" content="">
   <meta property="og:image" content="">
 
@@ -44,7 +44,7 @@
   </section>
 
   <!-- Vista detallada del post -->
-  <div id="post-detail" class="post-detail">
+  <div id="post-detail" class="post-detail" style="display:none;">
       <span class="close">&times;</span>
       <div id="post-content"></div>
   </div>
@@ -55,7 +55,6 @@
   <p>® 2024 HackStry. Todos los derechos reservados</p>
 </footer>
 
-<!-- JavaScript para manejar la carga y visualización de los posts -->
 <script>
     // Función para cargar los últimos 3 posts desde el archivo JSON
     function fetchRecentPosts() {
@@ -85,8 +84,7 @@
                 postElement.onclick = () => showPostDetail(post);
                 container.appendChild(postElement);
             });
-        })
-        .catch(error => console.error('Error al cargar los posts:', error));
+        });
     }
 
     // Función para mostrar el detalle del post
@@ -106,8 +104,7 @@
                     <div>${htmlContent}</div>
                 `;
                 postDetail.style.display = 'block';
-            })
-            .catch(error => console.error('Error al cargar el post:', error));
+            });
         } else {
             // Si es un PDF
             postContent.innerHTML = `
@@ -129,17 +126,7 @@
 
     // Asignar evento de cerrar a la "X"
     document.querySelector('.close').onclick = closePostDetail;
-
-    // Cerrar el modal al hacer clic fuera de él
-    window.onclick = function(event) {
-        const modal = document.getElementById('post-detail');
-        if (event.target === modal) {
-            closePostDetail();
-        }
-    };
 </script>
-
-<!-- Script de marcado de Markdown -->
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 </body>

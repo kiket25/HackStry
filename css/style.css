@@ -69,7 +69,7 @@ h1 {
 
 .post-thumbnail {
   flex-shrink: 0;
-  width: 120px; /* Reducción de tamaño de imagen */
+  width: 60px; /* Reducción de tamaño de imagen */
   margin-right: 20px;
 }
 

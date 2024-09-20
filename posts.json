@@ -2,7 +2,7 @@
     {
         "image": "img/img-picadilly.png",
         "title": "Máquina Piccadilly",
-        "category": "Write up",
+        "category": "Write Up",
         "fileType": "pdf",
         "description": "Write up de la máquina Piccadilly - DockerLabs (PDF)",
          "content": "posts/picadilly.pdf"
@@ -10,7 +10,7 @@
     {
         "image": "img/img-paradise.png",
         "title": "Máquina Paradise",
-        "category": "Write up",
+        "category": "Write Up",
         "fileType": "pdf",
         "description": "Write up de la máquina Paradise - DockerLabs (PDF)",
          "content": "posts/paradise.pdf"
@@ -22,5 +22,13 @@
         "fileType": "md",
         "description": "En este post test explico de forma rapida como proteger tu red wifi.",
         "content": "posts/protegetured.md"
+    },
+    {
+        "image": "img/img-devil.png",
+        "title": "Maquina Devil",
+        "category": "Write Up",
+        "fileType": "pdf",
+        "description": "Write Up de la máquina Devil - DockerLabs (PDF)",
+        "content": "posts/devil.pdf"
     }
 ]

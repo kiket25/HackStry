@@ -16,13 +16,13 @@
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.png">
 
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style_blog.css"> <!-- Mismo estilo del blog -->
 
   <meta name="theme-color" content="#fafafa">
 </head>
 
 <body>
- 
+
 <header>
     <img src="img/logo.png" alt="Logotipo HackStry" width="200">
   
@@ -39,10 +39,16 @@
   <h1>Blog sobre Ciberseguridad y Sistemas</h1>  
   <h4>Últimos Posts</h4>
 
-  <section id="recent-posts">
+  <section id="recent-posts" class="posts-container">
     <!-- Aquí se cargarán dinámicamente los posts -->
   </section>
 
+  <!-- Vista detallada del post -->
+  <div id="post-detail" class="post-detail" style="display:none;">
+      <span class="close">&times;</span>
+      <div id="post-content"></div>
+  </div>
+  
 </main>
 
 <footer>
@@ -63,21 +69,65 @@
             container.innerHTML = '';  // Limpiar el contenedor
 
             recentPosts.forEach(post => {
-                const postElement = document.createElement('article');
+                const postElement = document.createElement('div');
+                postElement.className = 'post';  // Clase usada en blog.html para los posts
                 postElement.innerHTML = `
-                    <a href="${post.content}"><img src="${post.image}" alt=""></a>
-                    <h3>${post.category}</h3>
-                    <a href="${post.content}"><h2>${post.title}</h2></a>
-                    <p>${post.description}</p>
+                    <div class="post-image">
+                        <img src="${post.image}" alt="${post.title}">
+                    </div>
+                    <div class="post-info">
+                        <h2>${post.title}</h2>
+                        <p>${post.description}</p>
+                        <p><strong>Fecha de creación:</strong> ${new Date(post.date).toLocaleDateString()}</p>
+                    </div>
                 `;
+                postElement.onclick = () => showPostDetail(post);
                 container.appendChild(postElement);
             });
         });
     }
 
+    // Función para mostrar el detalle del post
+    function showPostDetail(post) {
+        const postDetail = document.getElementById('post-detail');
+        const postContent = document.getElementById('post-content');
+        
+        // Si es un archivo Markdown
+        if (post.fileType === 'md') {
+            fetch(post.content)
+            .then(response => response.text())
+            .then(markdown => {
+                const htmlContent = marked.parse(markdown);
+                postContent.innerHTML = `
+                    <h2>${post.title}</h2>
+                    <p><strong>Categoría:</strong> ${post.category}</p>
+                    <div>${htmlContent}</div>
+                `;
+                postDetail.style.display = 'block';
+            });
+        } else {
+            // Si es un PDF
+            postContent.innerHTML = `
+                <h2>${post.title}</h2>
+                <p><strong>Categoría:</strong> ${post.category}</p>
+                <iframe class="viewer" src="${post.content}" width="800px" height="600px"></iframe>
+            `;
+            postDetail.style.display = 'block';
+        }
+    }
+
+    // Función para cerrar la vista detallada
+    function closePostDetail() {
+        document.getElementById('post-detail').style.display = 'none';
+    }
+
     // Llamar a la función para cargar los últimos posts cuando la página se cargue
     window.onload = fetchRecentPosts;
+
+    // Asignar evento de cerrar a la "X"
+    document.querySelector('.close').onclick = closePostDetail;
 </script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 </body>
 </html>

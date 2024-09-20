@@ -1,14 +1,14 @@
 <!doctype html>
-<html class="no-js" lang="ES">
+<html class="no-js" lang="es">
 
 <head>
   <meta charset="utf-8">
   <title>HackStry</title>
-  <meta name="description" content="">
+  <meta name="description" content="Blog sobre Ciberseguridad y Sistemas">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
+  <meta property="og:title" content="HackStry">
+  <meta property="og:type" content="website">
   <meta property="og:url" content="">
   <meta property="og:image" content="">
 
@@ -16,7 +16,7 @@
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.png">
 
-  <link rel="stylesheet" href="css/style_blog.css"> <!-- Mismo estilo del blog -->
+  <link rel="stylesheet" href="css/style.css"> <!-- Mismo estilo del blog -->
 
   <meta name="theme-color" content="#fafafa">
 </head>
@@ -44,7 +44,7 @@
   </section>
 
   <!-- Vista detallada del post -->
-  <div id="post-detail" class="post-detail" style="display:none;">
+  <div id="post-detail" class="post-detail">
       <span class="close">&times;</span>
       <div id="post-content"></div>
   </div>
@@ -55,6 +55,7 @@
   <p>® 2024 HackStry. Todos los derechos reservados</p>
 </footer>
 
+<!-- JavaScript para manejar la carga y visualización de los posts -->
 <script>
     // Función para cargar los últimos 3 posts desde el archivo JSON
     function fetchRecentPosts() {
@@ -84,7 +85,8 @@
                 postElement.onclick = () => showPostDetail(post);
                 container.appendChild(postElement);
             });
-        });
+        })
+        .catch(error => console.error('Error al cargar los posts:', error));
     }
 
     // Función para mostrar el detalle del post
@@ -104,13 +106,14 @@
                     <div>${htmlContent}</div>
                 `;
                 postDetail.style.display = 'block';
-            });
+            })
+            .catch(error => console.error('Error al cargar el post:', error));
         } else {
             // Si es un PDF
             postContent.innerHTML = `
                 <h2>${post.title}</h2>
                 <p><strong>Categoría:</strong> ${post.category}</p>
-                <iframe class="viewer" src="${post.content}" width="800px" height="600px"></iframe>
+                <iframe class="viewer" src="${post.content}#toolbar=0" width="800px" height="600px"></iframe>
             `;
             postDetail.style.display = 'block';
         }
@@ -126,7 +129,17 @@
 
     // Asignar evento de cerrar a la "X"
     document.querySelector('.close').onclick = closePostDetail;
+
+    // Cerrar el modal al hacer clic fuera de él
+    window.onclick = function(event) {
+        const modal = document.getElementById('post-detail');
+        if (event.target === modal) {
+            closePostDetail();
+        }
+    };
 </script>
+
+<!-- Script de marcado de Markdown -->
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 </body>

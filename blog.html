@@ -55,36 +55,6 @@
 </footer>
 
 <script>
-    // Función para cargar los últimos 3 posts desde el archivo JSON
-    function fetchRecentPosts() {
-        fetch('posts.json')  // Asegúrate de que el archivo posts.json esté en la misma carpeta
-        .then(response => response.json())
-        .then(data => {
-            // Ordenar los posts por fecha (más reciente primero)
-            data.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            const recentPosts = data.slice(0, 3); // Obtener los 3 primeros posts
-            const container = document.getElementById('recent-posts');
-            container.innerHTML = '';  // Limpiar el contenedor
-
-            recentPosts.forEach(post => {
-                const postElement = document.createElement('div');
-                postElement.className = 'post';  // Clase usada en blog.html para los posts
-                postElement.innerHTML = `
-                    <div class="post-image">
-                        <img src="${post.image}" alt="${post.title}">
-                    </div>
-                    <div class="post-info">
-                        <h2>${post.title}</h2>
-                        <p>${post.description}</p>
-                        <p><strong>Fecha de creación:</strong> ${new Date(post.date).toLocaleDateString()}</p>
-                    </div>
-                `;
-                postElement.onclick = () => showPostDetail(post);
-                container.appendChild(postElement);
-            });
-        });
-    }
 
     // Función para mostrar el detalle del post
     function showPostDetail(post) {

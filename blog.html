@@ -1,23 +1,15 @@
 <!doctype html>
 <html class="no-js" lang="ES">
-
 <head>
   <meta charset="utf-8">
   <title>HackStry</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <meta property="og:title" content="">
   <meta property="og:type" content="">
   <meta property="og:url" content="">
   <meta property="og:image" content="">
-
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icon.png">
-
-  <link rel="stylesheet" href="css/style.css"> <!-- Mismo estilo del blog -->
-
+  <link rel="stylesheet" href="css/style.css">
   <meta name="theme-color" content="#fafafa">
 </head>
 
@@ -25,7 +17,6 @@
 
 <header>
     <img src="img/logo.png" alt="Logotipo HackStry" width="200">
-  
   <nav>
     <ul>
       <li><a href="index.html">Home</a></li>
@@ -38,6 +29,7 @@
 <main>
   <h1>Blog sobre Ciberseguridad y Sistemas</h1>  
 
+  <!-- Sección de posts recientes -->
   <section id="recent-posts" class="posts-container">
     <!-- Aquí se cargarán dinámicamente los posts -->
   </section>
@@ -46,7 +38,6 @@
   <div id="post-detail" class="post-detail" style="display:none;">
       <span class="close">&times;</span>
       <div id="post-content"></div>
-      <canvas id="pdf-render" style="display:none;"></canvas>
   </div>
   
 </main>
@@ -56,86 +47,40 @@
 </footer>
 
 <script>
-// Cargar todos los posts desde el archivo posts.json
-function loadPostsFromJSON() {
-    fetch('posts.json')
-        .then(response => response.json())
-        .then(posts => {
-            const recentPosts = document.getElementById('recent-posts');
-            
-            posts.forEach(post => {
-                const postElement = document.createElement('div');
-                postElement.classList.add('post-item');
-                
-                postElement.innerHTML = `
-                    <img src="${post.image}" alt="${post.title}">
-                    <div>
-                        <a href="#" onclick="showPostDetail(${JSON.stringify(post).replace(/"/g, '&quot;')})"><h2>${post.title}</h2></a>
-                        <h3>${post.category}</h3>
-                        <p>${post.title} - ${post.category}</p>
-                    </div>
-                `;
-                
-                recentPosts.appendChild(postElement);
-            });
-        })
-        .catch(error => console.error('Error al cargar posts:', error));
-}
-
-// Mostrar el contenido detallado de un post
-function showPostDetail(post) {
-    const postDetail = document.getElementById('post-detail');
-    const postContent = document.getElementById('post-content');
-    const pdfCanvas = document.getElementById('pdf-render');
-    
-    postContent.innerHTML = `
-        <h2>${post.title}</h2>
-        <p><strong>Categoría:</strong> ${post.category}</p>
-    `;
-    
-    postDetail.style.display = 'block';
-    
-    if (post.fileType === 'pdf') {
-        pdfCanvas.style.display = 'block';
-        renderPDF(post.content);
-    } else if (post.fileType === 'md') {
-        pdfCanvas.style.display = 'none';
-        fetch(post.content)
-            .then(response => response.text())
-            .then(markdown => {
-                postContent.innerHTML += marked.parse(markdown);
-            });
-    }
-}
-
-// Función para renderizar PDFs
-function renderPDF(url) {
-    const pdfjsLib = window['pdfjs-dist/build/pdf'];
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
-
-    const canvas = document.getElementById('pdf-render');
-    const context = canvas.getContext('2d');
-
-    pdfjsLib.getDocument(url).promise.then(pdfDoc => {
-        pdfDoc.getPage(1).then(page => {
-            const viewport = page.getViewport({scale: 1.5});
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-
-            const renderContext = {
-                canvasContext: context,
-                viewport: viewport
-            };
-            page.render(renderContext);
+  // Cargar JSON y mostrar posts
+  fetch('posts.json')
+    .then(response => response.json())
+    .then(posts => {
+        const postsContainer = document.getElementById('recent-posts');
+        posts.forEach(post => {
+            const postElement = document.createElement('article');
+            postElement.innerHTML = `
+                <img src="${post.image}" alt="${post.title}">
+                <h2>${post.title}</h2>
+                <p>${post.description}</p>
+                <button onclick="showPostDetail(${JSON.stringify(post)})">Ver más</button>
+            `;
+            postsContainer.appendChild(postElement);
         });
+    })
+    .catch(error => {
+        console.error('Error al cargar los posts:', error);
     });
-}
 
-// Cargar posts al iniciar la página
-window.onload = loadPostsFromJSON;
+  function showPostDetail(post) {
+      const postDetail = document.getElementById('post-detail');
+      const postContent = document.getElementById('post-content');
 
+      postContent.innerHTML = `
+          <h2>${post.title}</h2>
+          <p><strong>Categoría:</strong> ${post.category}</p>
+          <p>${post.description}</p>
+          ${post.fileType === 'pdf' ? `<a href="${post.content}" target="_blank">Abrir PDF</a>` : `<p>Contenido: ${post.content}</p>`}
+      `;
+      
+      postDetail.style.display = 'block';
+  }
 </script>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 </body>
 </html>

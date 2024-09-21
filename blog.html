@@ -56,45 +56,45 @@
 
 <script>
 
-    // Función para mostrar el detalle del post
-    function showPostDetail(post) {
-        const postDetail = document.getElementById('post-detail');
-        const postContent = document.getElementById('post-content');
+function showPostDetail(post) {
+    const postDetail = document.getElementById('post-detail');
+    const postContent = document.getElementById('post-content');
+
+    postContent.innerHTML = `
+        <h2>${post.title}</h2>
+        <p><strong>Categoría:</strong> ${post.category}</p>
+        <canvas id="pdf-render"></canvas>
+    `;
+    
+    postDetail.style.display = 'block';
+
+    if (post.fileType === 'pdf') {
+        const url = post.content;
+        const pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
         
-        // Si es un archivo Markdown
-        if (post.fileType === 'md') {
-            fetch(post.content)
-            .then(response => response.text())
-            .then(markdown => {
-                const htmlContent = marked.parse(markdown);
-                postContent.innerHTML = `
-                    <h2>${post.title}</h2>
-                    <p><strong>Categoría:</strong> ${post.category}</p>
-                    <div>${htmlContent}</div>
-                `;
-                postDetail.style.display = 'block';
+        pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+            let pdfDoc = pdfDoc_;
+            let pageNum = 1;
+
+            pdfDoc.getPage(pageNum).then(function(page) {
+                let viewport = page.getViewport({scale: 1.5});
+                let canvas = document.getElementById('pdf-render');
+                let context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                let renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                page.render(renderContext);
             });
-        } else {
-            // Si es un PDF
-            postContent.innerHTML = `
-                <h2>${post.title}</h2>
-                <p><strong>Categoría:</strong> ${post.category}</p>
-                <iframe class="viewer" src="${post.content}#toolbar=0" width="800px" height="600px"></iframe>
-            `;
-            postDetail.style.display = 'block';
-        }
+        });
     }
+}
 
-    // Función para cerrar la vista detallada
-    function closePostDetail() {
-        document.getElementById('post-detail').style.display = 'none';
-    }
-
-    // Llamar a la función para cargar los últimos posts cuando la página se cargue
-    window.onload = fetchRecentPosts;
-
-    // Asignar evento de cerrar a la "X"
-    document.querySelector('.close').onclick = closePostDetail;
 </script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 

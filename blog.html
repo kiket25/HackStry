@@ -9,7 +9,7 @@
   <meta property="og:type" content="">
   <meta property="og:url" content="">
   <meta property="og:image" content="">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style_blog.css">
   <meta name="theme-color" content="#fafafa">
 </head>
 
@@ -30,7 +30,7 @@
   <h1>Blog sobre Ciberseguridad y Sistemas</h1>  
   
   <section id="recent-posts" class="posts-container">
-    <!-- Aquí se cargarán dinámicamente los posts, pero por ahora estará vacío -->
+    <!-- Aquí se cargarán dinámicamente los posts -->
   </section>
 
   <!-- Vista detallada del post -->
@@ -82,11 +82,37 @@
 
     // Asignar evento de cerrar a la "X"
     document.querySelector('.close').onclick = closePostDetail;
+
+    // Cargar posts dinámicamente desde un archivo JSON
+    function loadPosts() {
+        fetch('posts.json')
+        .then(response => response.json())
+        .then(posts => {
+            const postsContainer = document.getElementById('recent-posts');
+            postsContainer.innerHTML = ''; // Limpiar el contenido actual
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post-item');
+                postElement.innerHTML = `
+                    <div class="post-thumbnail">
+                        <img src="${post.image}" alt="${post.title}">
+                    </div>
+                    <div class="post-content">
+                        <h2>${post.title}</h2>
+                        <p class="category">${post.category}</p>
+                        <p>${post.description}</p>
+                        <button onclick='showPostDetail(${JSON.stringify(post)})'>Leer más</button>
+                    </div>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        });
+    }
+
+    // Llamar a la función loadPosts cuando cargue la página
+    window.onload = loadPosts;
 </script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<footer>
-  <p>® 2024 HackStry. Todos los derechos reservados</p>
-</footer>
 
 </body>
 </html>

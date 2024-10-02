@@ -108,7 +108,20 @@
             });
         });
     }
-
+    // Verificar si hay un identificador en la URL y mostrar el post correspondiente
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get('post');
+    if (postId) {
+        // Buscar el post por su identificador (id) en la lista de posts cargados
+        fetch('posts.json')
+        .then(response => response.json())
+        .then(posts => {
+            const post = posts.find(p => p.id === postId);
+            if (post) {
+                showPostDetail(post); // Mostrar el detalle del post si se encuentra
+            }
+        });
+    }
     // Llamar a la función loadPosts cuando cargue la página
     window.onload = loadPosts;
 </script>

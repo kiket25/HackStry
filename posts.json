@@ -1,5 +1,6 @@
 [
     {
+        "id": "picadilly",
         "image": "img/img-picadilly.png",
         "title": "Máquina Piccadilly",
         "category": "Write Up",
@@ -9,6 +10,7 @@
         "date": "2024-09-12"
     },
     {
+        "id": "paradise",
         "image": "img/img-paradise.png",
         "title": "Máquina Paradise",
         "category": "Write Up",
@@ -18,6 +20,7 @@
         "date": "2024-09-13"
     },
     {
+        "id": "wifip",
         "image": "img/wifip.jpg",
         "title": "Cómo Proteger tu Red Wi-Fi de Amenazas",
         "category": "consejo",
@@ -27,6 +30,7 @@
         "date": "2024-09-14"
     },
     {
+        "id": "devil",
         "image": "img/img-devil.png",
         "title": "Maquina Devil",
         "category": "Write Up",

@@ -3,6 +3,42 @@
     negro: #101828
     gris: #475467 
 */
+/* Estilos para pantallas pequeñas (móviles) */
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+
+  .posts-list {
+    grid-template-columns: 1fr; /* Una columna para pantallas pequeñas */
+  }
+
+  header img {
+    width: 100px; /* Imagen del header más pequeña en móviles */
+  }
+}
+
+/* Estilos para pantallas medianas (tablets) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  body {
+    font-size: 16px;
+  }
+
+  .posts-list {
+    grid-template-columns: 1fr 1fr; /* Dos columnas en tablets */
+  }
+}
+
+/* Estilos para pantallas grandes (desktops) */
+@media (min-width: 1025px) {
+  body {
+    font-size: 18px;
+  }
+
+  .posts-list {
+    grid-template-columns: 1fr 1fr 1fr; /* Tres columnas en escritorios */
+  }
+}
 
 body {
     font-size: 18px;

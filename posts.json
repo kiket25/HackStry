@@ -38,5 +38,15 @@
         "description": "Write Up de la máquina Devil - DockerLabs (PDF)",
         "content": "posts/devil.pdf",
         "date": "2024-09-20"
+    },
+    {
+        "id": "importancidelaciber",
+        "image": "img/img-devil.png",
+        "title": "La Importancia de la Ciberseguridad",
+        "category": "Varios",
+        "fileType": "md",
+        "description": "En este post muestro como es de importante la ciberseguridad.",
+        "content": "posts/laimportanciadelaciber.md",
+        "date": "2024-10-4"
     }
 ]
